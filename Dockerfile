@@ -14,9 +14,4 @@ RUN sed -i -- 's,DUMMY,../LJSpeech-1.1/wavs,g' filelists/*.txt
 
 RUN apt-get install -y vim-tiny
 
-# manually build tensorflow
-RUN pip uninstall tensorflow
-RUN git clone https://github.com/tensorflow/tensorflow
-WORKDIR tensorflow
-RUN git checkout v1.9.0
  
