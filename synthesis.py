@@ -15,6 +15,8 @@ from text import text_to_sequence
 from os import path
 from os.path import dirname
 
+import scipy.io.wavfile
+
 # %matplotlib inline
 
 # def plot_data(data, figsize=(16, 4)):
@@ -67,5 +69,10 @@ spec_from_mel = spec_from_mel * spec_from_mel_scaling
 waveform = griffin_lim(torch.autograd.Variable(spec_from_mel[:, :, :-1]), 
                        taco_stft.stft_fn, 60)
 # ipd.Audio(waveform[0].data.cpu().numpy(), rate=hparams.sampling_rate)
-print('waveform=', waveform[0].data.cpu().numpy())
+wav = waveform[0].data.cpu().numpy()
 
+# Output file
+print('wav=', wav)
+wavArray = np.asarray(wav, dtype=np.int16)
+scipy.io.wavfile.write(path.join(dirname(__file__), 'sui2.wav'), 
+                       hparams.sampling_rate, wav)
